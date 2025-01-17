@@ -52,16 +52,16 @@ int	find(int x, int y, node *head, char **map, int wh[], char exit)
 	if (y - 1 < 0 || x - 1 < 0 || x + 1 >= wh[0] || y + 1 >= wh[1])
 		return (-1);
 	map[y][x] = 'X';
-	if (map[y - 1][x] == '0')
+	if (map[y][x + 1] == '0')
 	{
-		ft_push_back(head, new_node(x, y - 1));
-		if (find(x, y - 1, head, map, wh, exit) == 1)
+		ft_push_back(head, new_node(x + 1, y));
+		if (find(x + 1, y, head, map, wh, exit) == 1)
 			return (1);
 		ft_pop_back(head);
 	}
-	else if (map[y - 1][x] == exit)
+	else if (map[y][x + 1] == exit)
 	{
-		ft_push_back(head, new_node(x, y - 1));
+		ft_push_back(head, new_node(x + 1, y));
 		return (1);
 	}
 	if (map[y + 1][x] == '0')
@@ -76,18 +76,6 @@ int	find(int x, int y, node *head, char **map, int wh[], char exit)
 		ft_push_back(head, new_node(x, y + 1));
 		return (1);
 	}
-	if (map[y][x + 1] == '0')
-	{
-		ft_push_back(head, new_node(x + 1, y));
-		if (find(x + 1, y, head, map, wh, exit) == 1)
-			return (1);
-		ft_pop_back(head);
-	}
-	else if (map[y][x + 1] == exit)
-	{
-		ft_push_back(head, new_node(x + 1, y));
-		return (1);
-	}
 	if (map[y][x - 1] == '0')
 	{
 		ft_push_back(head, new_node(x - 1, y));
@@ -100,5 +88,18 @@ int	find(int x, int y, node *head, char **map, int wh[], char exit)
 		ft_push_back(head, new_node(x - 1, y));
 		return (1);
 	}
+	if (map[y - 1][x] == '0')
+	{
+		ft_push_back(head, new_node(x, y - 1));
+		if (find(x, y - 1, head, map, wh, exit) == 1)
+			return (1);
+		ft_pop_back(head);
+	}
+	else if (map[y - 1][x] == exit)
+	{
+		ft_push_back(head, new_node(x, y - 1));
+		return (1);
+	}
 	return (-1);
 }
+
